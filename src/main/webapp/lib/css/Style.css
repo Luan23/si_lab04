@@ -1,0 +1,98 @@
+* {
+  padding: 0%;
+  margin: 0%;
+}
+
+
+
+.belowNavbar {
+  background-color: #CDC9C9;
+}
+
+.container {
+  width: 100%;
+}
+
+.gallery {
+  margin-top: 2%;
+  text-align: left;
+  display: inline-block;
+  position: relative;
+}
+.imgContainer {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 0px;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+/*---------------------------------------------------------*/
+  opacity: 1;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+
+.gallery:hover .image {
+  opacity: 0.3;
+}
+
+.gallery:hover .middle {
+  opacity: 1;
+}
+
+.profile-warning {
+  text-align: center;
+  font-style: oblique;
+  font-family: cursive;
+  color: black;
+  font-size: 50px;
+  padding: 16px 32px;
+}
+
+.watchlist-warning {
+  text-align: center;
+  font-style: oblique;
+  font-family: cursive;
+  color: black;
+  font-size: 50px;
+  padding: 16px 32px;
+}
+
+.home-search {
+  text-align: center;
+  font-style: oblique;
+  font-family: cursive;
+  color: black;
+  font-size: 50px;
+  padding: 16px 32px;
+}
+
+.text {
+  background-color: #6495ED;
+  text-align: center;
+  font-style: oblique;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+/*---------------------------------------------------------*/
+.serie-poster{
+  margin: 10px;
+  opacity: 1;
+  display: block;
+  transition: .3s ease;
+  backface-visibility: hidden;
+}

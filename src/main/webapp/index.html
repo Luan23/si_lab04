@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html ng-app="catalogoSeries">
+  <head>
+    <meta charset="utf-8">
+    <title>SI-LAB03</title>
+
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="lib/css/Style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/bootstrap/bootstrap.js"></script>
+    <script src="lib/jquery/jquery-3.2.1.js"></script>
+    <script src="lib/js/controller.js"></script>
+
+  </head>
+
+  <body class="belowNavbar" ng-controller="catalogoSeriesCtrl">
+
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="#home" data-toggle="tab">SI-LAB03</a></li>
+          <li><a href="#watchList" data-toggle="tab">Watchlist</a></li>
+          <li class="active" ><a href="#profile" data-toggle="tab">Profile</a></li>
+        </ul>
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <input type="text" ng-model="nomeSerie"  name="" value="" placeholder="Nome da Série...">
+          </div>
+          <button class="btn btn-primary" ng-click="buscaSeries(nomeSerie)">Search</button>
+        </form>
+        <form class="navbar-form navbar-right">
+          <button class="btn btn-primary" type="button" name="button" ng-show="logado == true" ng-click="deslogar()">{{usuario.nome}}</button>
+          <button class="btn btn-primary" type="button" name="button" ng-show="logado == false" ng-click="cadastrar()">Sign Up</button>
+          <button class="btn btn-primary" type="button" name="button" ng-show="logado == false" ng-click="logar()">Sign In</button>
+        </form>
+      </div>
+    </nav>
+
+<div class="container">
+
+  <div class="tab-content">
+
+    <div id="profile" class="tab-pane in active">
+        <div class="imgContainer">
+          <div class="profile-warning" ng-show="profile.length == 0">
+                  PROFILE ESTÁ VAZIO
+          </div>
+          <div class="gallery" ng-repeat="serie in profile" ng-show="profile.length >= 0">
+            <img class="serie-poster" src="{{serie.Poster !== 'N/A' ? serie.Poster:'lib/poster.jpg'}}" width="200" height="297">
+            <div class="middle">
+              <div class="text">{{serie.Title}}</div>
+              <br>
+              <div class="wrapper">
+
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#serieInformation{{$index}}">Information</button>
+                <br>
+                <button data-toggle="tooltip" data-placement="top" class="btn btn-primary btn-block"  ng-click="removeSerieProfile(serie)">Remove</button>
+              </div>
+            </div>
+
+            <div id="serieInformation{{$index}}" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">{{serie.Title}} [{{serie.Rated}}]</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="serie-profile">
+                      <div class="info-profile">
+                        <div class="rating">
+                          <br>
+                          <span class="info-title">IMDB Rating:</span>
+                          <span class="info-content">{{serie.imdbRating}}</span><br><br>
+                          <span class="info-title">Sua avaliação:</span>
+                          <span class="info-content">{{serie.avaliacao}}</span><br><br>
+                          <span class="info-title">Último episódio assistido:</span>
+                          <span class="info-content">{{serie.ultimoEpisodio}}</span><br><br>
+                          <span class="info-title">Alterar avaliação: </span><input class="profile-input" type="text" name="rating" ng-model="rating" placeholder="Ex.: 10.0">
+                          <button class="submit-button" type="submit" ng-click="enviarRating(serie, rating)" value=“submit”><i class="glyphicon glyphicon-thumbs-up"></i></button><br><br>
+                          <span class="info-title">Alterar último episódio assistido: </span>
+                          <input class="profile-input" type="text" name="episode" ng-model="episode" placeholder="Ex.: S02E05">
+                          <button class="submit-button" type="submit" ng-click="enviarLastEpisode(serie, episode)" value=“submit”><i class="glyphicon glyphicon-thumbs-up"></i></button>
+                        </div>
+                      </div>
+                      <img class="profile-pic" src="{{serie.Poster !== 'N/A' ? serie.Poster:'lib/poster.jpg'}}" width="200px" height="297px">
+                    </div>
+                    <br><br>
+                    <div class="plot">
+                      <h4 class="plot-title"> Plot: </h4>
+                      <h4 class="info-content"> {{serie.Plot}} </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+    </div>
+
+
+    <div id= "watchList" class="tab-pane">
+          <div class="imgContainer">
+            <div class="watchlist-warning" ng-show="watchlist.length == 0">
+                    WATCHLIST ESTÁ VAZIO
+            </div>
+            <div class="gallery" ng-repeat="serie in watchlist" ng-show="watchlist.length >= 0">
+              <img class="serie-poster" src="{{serie.Poster !== 'N/A' ? serie.Poster:'lib/poster.jpg'}}" width="200" height="297">
+              <div class="middle">
+                <div class="text">{{serie.Title}}</div>
+                <br>
+                <div class="wrapper">
+                  <button class="btn btn-primary btn-block"  ng-click="addSerieProfile(serie)">+ Profile</button>
+                  <br>
+                  <button class="btn btn-primary btn-block"  ng-click="removeSerieWatchList(serie)">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <div id="home" class="tab-pane in active">
+        <div class="imgContainer">
+          <div class="home-search" ng-show="busca.length == 0">
+            PESQUISE POR SUAS SÉRIES
+          </div>
+          <div class="gallery" ng-repeat="serie in busca" ng-show="busca.length >= 0">
+            <img class="serie-poster" src="{{serie.Poster !== 'N/A' ? serie.Poster:'lib/poster.jpg'}}" width="200" height="297">
+            <div class="middle">
+              <div class="text">{{serie.Title}}</div>
+              <br>
+              <div class="wrapper">
+                <button class="btn btn-primary btn-block"  ng-click="addSerieProfile(serie)">+ Profile</button>
+                <br>
+                <button class="btn btn-primary btn-block"   ng-click="addSerieWatchlist(serie)">+ WatchList</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  </div>
+
+</div>
+  </body>
+</html>
