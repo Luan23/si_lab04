@@ -6,7 +6,7 @@
 	<groupId>br.com.siLab03</groupId>
 	<artifactId>siLab03</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>siLab03</name>
 	<description>Demo project for Spring Boot</description>
